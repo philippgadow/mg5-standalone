@@ -21,8 +21,7 @@ set Wv1 AUTO
 # overall coupling strength ct
 set ct1 1
 # chirality parameter theta
-# set theta1 1.57079633
-set theta1 cmath.pi/2.
+set theta1 1.57079633
 
 # PDF set (default: 315200=NNPDF31_lo_as_0130)
 set pdlabel lhapdf
