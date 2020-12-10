@@ -39,6 +39,9 @@ RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF23_lo
 RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF30_lo_as_0130.tar.gz | tar xzf -
 RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF31_lo_as_0130.tar.gz | tar xzf -
 
+# set up LHAPDF config executable
+RUN echo "set lhapdf /home/hep/${MG_VERSION}/HEPTools/lhapdf6/bin/lhapdf-config" | /home/hep/${MG_VERSION}/bin/mg5_aMC
+
 # install models
 RUN chmod 777 /home/hep/${MG_VERSION}/models
 RUN cp -r /home/hep/Models/* /home/hep/${MG_VERSION}/models/
