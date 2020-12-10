@@ -37,6 +37,7 @@ WORKDIR /home/hep/${MG_VERSION}/HEPTools/lhapdf6/share/LHAPDF
 # Download few default PDFs
 RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF23_lo_as_0130_qed.tar.gz | tar xzf -
 RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF30_lo_as_0130.tar.gz | tar xzf -
+RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF31_lo_as_0130.tar.gz | tar xzf -
 
 # install models
 RUN chmod 777 /home/hep/${MG_VERSION}/models
