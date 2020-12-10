@@ -3,7 +3,7 @@ define p = g u c d s u~ c~ d~ s~
 define j = g u c d s u~ c~ d~ s~
 generate p p > t t~ v1/v1, v1 > t t~
 
-output proc_bsm4top_lo_ttv1-tt_mv1-1500_width-auto
+output proc_bsm4top_phenoufo_ttv1_mv1-1500_wv1-auto_t1-1_theta1-1p57
 launch
 # set shower, madspin decay or analysis
 shower=Pythia8
@@ -18,9 +18,9 @@ set Mv1 1500
 set Wv1 AUTO
 # overall coupling strength ct
 set ct1 1
-# no option to set theta1?
+# chirality parameter theta
 # set theta1 1.57079633
-# set theta1 cmath.pi/2.
+set theta1 cmath.pi/2.
 
 # PDF set (default: 315200=NNPDF31_lo_as_0130)
 set pdlabel lhapdf
