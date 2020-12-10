@@ -1,9 +1,9 @@
 import model Top_Philic_UFO
-define p = g u c d s u~ c~ d~ s~
-define j = g u c d s u~ c~ d~ s~
+define p = g u c d s u~ c~ d~ s~ b b~
+define j = g u c d s u~ c~ d~ s~ b b~
 define w = w+ w-
-generate p p > t w v1/v1, v1 > t t~
-generate p p > w t~ v1/v1, v1 > t t~
+define top = t t~
+generate p p > top w v1/v1, v1 > t t~
 
 output proc_bsm4top_phenoufo_tWv1_mv1-1500_wv1-auto_t1-1_theta1-1p57
 launch

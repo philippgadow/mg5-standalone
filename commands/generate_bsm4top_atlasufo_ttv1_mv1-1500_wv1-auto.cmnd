@@ -3,7 +3,7 @@ define p = g u c d s u~ c~ d~ s~
 define j = g u c d s u~ c~ d~ s~
 generate p p > t t~ v1/v1, v1 > t t~
 
-output proc_bsm4top_lo_ttv1-tt_v1-1500_width_auto
+output proc_bsm4top_atlasufo_ttv1_mv1-1500_wv1-auto
 launch
 # set shower, madspin decay or analysis
 shower=Pythia8
