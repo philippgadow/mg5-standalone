@@ -1,9 +1,9 @@
-import model Top_Philic_UFO
+import model Top-Philic_UFO_V1
 define p = g u c d s u~ c~ d~ s~
 define j = g u c d s u~ c~ d~ s~
 generate p p > t t~ v1/v1, v1 > t t~
 
-output proc_bsm4top_phenoufo_ttv1_mv1-1500_wv1-auto_t1-1_theta1-1p57
+output proc_bsm4top_atlasufo_ttv1_mv1-1500_wv1-auto
 launch
 # set shower, madspin decay or analysis
 shower=Pythia8
@@ -18,12 +18,15 @@ set Mv1 1500
 set Wv1 AUTO
 # overall coupling strength ct
 set ct1 1
-# chirality parameter theta
-set theta1 1.57079633
+# no option to set chirality parameter theta, fixed in ATLAS UFO to pi/4
+# set theta1 cmath.pi/4.
 
 # PDF set (default: 315200=NNPDF31_lo_as_0130)
 set pdlabel lhapdf
 set lhaid 315200
+
+# 5 flavour scheme: NNPDF30_lo_as_0130       263000
+# 4 flavour scheme: NNPDF30_lo_as_0130_nf_4	 263400
 
 set cut_decays False
 set event_norm sum
