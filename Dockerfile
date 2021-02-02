@@ -7,7 +7,7 @@ RUN apt-get install -y --no-install-recommends \
 wget ca-certificates python python-dev gfortran build-essential \
 ghostscript nano vim libboost-all-dev rsync gnuplot
 RUN wget --quiet -O- https://bootstrap.pypa.io/get-pip.py | python -
-RUN pip install numpy scipy
+RUN pip install numpy scipy pandas matplotlib seaborn atlas-mpl-style
 
 ADD . /home/hep/
 WORKDIR /home/hep
