@@ -7,6 +7,7 @@ output proc_bsm4top_atlasufo_ttv1_mv1-1500_wv1-auto
 launch
 # set shower, madspin decay or analysis
 shower=Pythia8
+detector=Delphes
 done
 ###################################
 # set param and run card settings #

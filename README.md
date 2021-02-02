@@ -10,7 +10,7 @@ The software is provided as a docker image which is hosted on Docker Hub at [phi
 On a local machine with Docker installed (e.g. your laptop), execute:
 ```
 mkdir output
-docker run -it --rm --volume $PWD/output:/var/MG_outputs --volume /afs:/afs --volume /nfs:/nfs --volume /tmp:/tmp philippgadow/mg5-standalone
+docker run -it --rm --volume $PWD/output:/var/MG_outputs --volume /tmp:/tmp philippgadow/mg5-standalone
 # ignore warning about groups: cannot find name for group ID 1099333925
 ```
 
