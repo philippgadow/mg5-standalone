@@ -25,9 +25,6 @@ set ct1 1
 set pdlabel lhapdf
 set lhaid 315200
 
-# 5 flavour scheme: NNPDF30_lo_as_0130       263000
-# 4 flavour scheme: NNPDF30_lo_as_0130_nf_4	 263400
-
 set cut_decays False
 set event_norm sum
 set maxjetflavor 4
