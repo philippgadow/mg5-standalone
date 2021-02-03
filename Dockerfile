@@ -43,6 +43,9 @@ RUN wget --quiet -O- https://github.com/delphes/delphes/archive/3.4.3pre08.tar.g
 RUN echo "set lhapdf /home/hep/${MG_VERSION}/HEPTools/lhapdf6/bin/lhapdf-config" | /home/hep/${MG_VERSION}/bin/mg5_aMC
 RUN echo "set delphes_path /home/hep/${MG_VERSION}/delphes-3.4.3pre08/" | /home/hep/${MG_VERSION}/bin/mg5_aMC
 
+# set up MadGraph
+RUN echo "set auto_convert_model True" | /home/hep/${MG_VERSION}/bin/mg5_aMC
+
 # install models
 COPY . /home/hep/
 RUN chmod 777 /home/hep/${MG_VERSION}/models
