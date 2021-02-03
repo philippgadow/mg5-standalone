@@ -17,7 +17,7 @@ set Mv1 1500.
 # AUTO (default): automatic computation of minimal width
 set Wv1 AUTO
 # overall coupling strength ct
-set ct1 scan:[0.5,1.,2.,5.,10.,50.,100.]
+set ct1 scan:[0.1, 0.2, 0.3, 0.4, 0.5, 0.75, 1., 2., 3., 4., 5., 6., 7., 8., 9., 10.]
 # chirality parameter theta
 set theta1 0.78539816341250
 #
