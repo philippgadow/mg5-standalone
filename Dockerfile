@@ -28,7 +28,7 @@ RUN echo "install mg5amc_py8_interface" | /home/hep/${MG_VERSION}/bin/mg5_aMC
 RUN rm /home/hep/${MG_VERSION}/input/.autoupdate
 
 # install PDF
-WORKDIR /home/hep/${MG_VERSION}/HEPTools/lhapdf6/share/LHAPDF
+WORKDIR /home/hep/${MG_VERSION}/HEPTools/lhapdf6_py3/share/LHAPDF
 # Download few default PDFs
 RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF23_lo_as_0130_qed.tar.gz | tar xzf -
 RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF30_lo_as_0130.tar.gz | tar xzf -
@@ -36,12 +36,12 @@ RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF31_lo
 
 # install Delphes
 # (must install pre-release due to missing TF1 include in current version 4.2)
-WORKDIR /home/hep/${MG_VERSION}
+WORKDIR /home/hep/${MG_VERSION}/HEPTools
 RUN wget --quiet -O- https://github.com/delphes/delphes/archive/3.4.3pre08.tar.gz | tar xzf - && cd delphes-3.4.3pre08 && make
 
 # set up config executables
-RUN echo "set lhapdf /home/hep/${MG_VERSION}/HEPTools/lhapdf6/bin/lhapdf-config" | /home/hep/${MG_VERSION}/bin/mg5_aMC
-RUN echo "set delphes_path /home/hep/${MG_VERSION}/delphes-3.4.3pre08/" | /home/hep/${MG_VERSION}/bin/mg5_aMC
+RUN echo "set lhapdf /home/hep/${MG_VERSION}/HEPTools/lhapdf6_py3/bin/lhapdf-config" | /home/hep/${MG_VERSION}/bin/mg5_aMC
+RUN echo "set delphes_path /home/hep/${MG_VERSION}/HEPTools/delphes-3.4.3pre08/" | /home/hep/${MG_VERSION}/bin/mg5_aMC
 
 # set up MadGraph
 RUN echo "set auto_convert_model True" | /home/hep/${MG_VERSION}/bin/mg5_aMC
