@@ -45,6 +45,7 @@ RUN echo "set delphes_path /home/hep/${MG_VERSION}/HEPTools/delphes-3.4.3pre08/"
 
 # set up MadGraph
 RUN echo "set auto_convert_model True" | /home/hep/${MG_VERSION}/bin/mg5_aMC
+RUN ln /home/hep/MG5_aMC_v2_9_1_2/bin/mg5_aMC /usr/bin/mg5_aMC
 
 # install models
 COPY . /home/hep/
