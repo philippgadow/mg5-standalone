@@ -42,9 +42,6 @@ def main():
     plt.title(args.process)
     plt.xlabel('m(v1) [GeV]')
     plt.ylabel('$\\tan \\theta_{1}$')
-    # y = array([0, 0.78539816341250, 1.5707963268, 2.3561944902, 3.1415926536]
-    # yticks = ['0', '$\pi/4$','$\pi/2$','$3\pi/4$', '$\pi$']
-    # plt.yticks(y, yticks)
     plt.gca().invert_yaxis()
 
     ratio = '_ratio_to_ttv1' if args.ratio else ''
