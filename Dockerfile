@@ -39,6 +39,9 @@ RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF31_lo
 WORKDIR /home/hep/${MG_VERSION}/HEPTools
 RUN wget --quiet -O- https://github.com/delphes/delphes/archive/3.4.3pre08.tar.gz | tar xzf - && cd delphes-3.4.3pre08 && make
 
+# install Fastjet
+RUN wget --quiet -O- http://fastjet.fr/repo/fastjet-3.3.4.tar.gz | tar xzf - && cd fastjet-3.3.4/ && ./configure --prefix=$PWD/build && make && make check && make install
+
 # set up config executables
 RUN echo "set lhapdf /home/hep/${MG_VERSION}/HEPTools/lhapdf6_py3/bin/lhapdf-config" | /home/hep/${MG_VERSION}/bin/mg5_aMC
 RUN echo "set delphes_path /home/hep/${MG_VERSION}/HEPTools/delphes-3.4.3pre08/" | /home/hep/${MG_VERSION}/bin/mg5_aMC
