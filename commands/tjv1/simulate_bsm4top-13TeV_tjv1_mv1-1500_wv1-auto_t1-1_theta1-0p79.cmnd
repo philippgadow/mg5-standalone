@@ -1,8 +1,9 @@
 import model Top_Philic_UFO
 define p = g u c d s u~ c~ d~ s~ b b~
 define j = u c d s u~ c~ d~ s~ b b~
-generate p p > t t~ v1/v1, v1 > t t~
-output proc_bsm4top-delphes-13TeV_ttv1_mv1-1500_wv1-auto_t1-1_theta1-0p79
+define top = t t~
+generate p p > top j v1/v1, v1 > t t~
+output proc_bsm4top-delphes-13TeV_tjv1_mv1-1500_wv1-auto_t1-1_theta1-0p79
 launch
 # set shower, madspin decay or analysis
 shower=Pythia8
