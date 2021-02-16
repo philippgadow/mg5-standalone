@@ -38,7 +38,8 @@ RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF31_lo
 # (must install pre-release due to missing TF1 include in current version 4.2)
 WORKDIR /home/hep/${MG_VERSION}/HEPTools
 RUN wget --quiet -O- https://github.com/delphes/delphes/archive/3.4.3pre08.tar.gz | tar xzf - && cd delphes-3.4.3pre08 && make
-
+ENV LD_LIBRARY_PATH /home/hep/${MG_VERSION}/HEPTools/delphes-3.4.3pre08/:$LD_LIBRARY_PATH
+ENV ROOT_INCLUDE_PATH /home/hep/${MG_VERSION}/HEPTools/delphes-3.4.3pre08/external/:$ROOT_INCLUDE_PATH
 # set up config executables
 RUN echo "set lhapdf /home/hep/${MG_VERSION}/HEPTools/lhapdf6_py3/bin/lhapdf-config" | /home/hep/${MG_VERSION}/bin/mg5_aMC
 RUN echo "set delphes_path /home/hep/${MG_VERSION}/HEPTools/delphes-3.4.3pre08/" | /home/hep/${MG_VERSION}/bin/mg5_aMC
