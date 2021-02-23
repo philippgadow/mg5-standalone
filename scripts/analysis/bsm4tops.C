@@ -55,6 +55,8 @@ struct MyPlots {
   TH1 *fCutflow;
   TH1 *fCutflow_weighted;
 
+  TH2 *fRegions;
+
   TH1 *fNJets[10];
   TH1 *fNAddJets[10];
   TH1 *fNBjets[10];
@@ -104,7 +106,13 @@ void BookHistograms(ExRootResult *result, MyPlots *plots) {
                           "4+a 3b",
                           "4+a 4+b"};
   for (int i = 1; i < 18; i++) plots->fCutflow->GetXaxis()->SetBinLabel(i, cuts[i-1]);
+  for (int i = 1; i < 18; i++) plots->fCutflow_weighted->GetXaxis()->SetBinLabel(i, cuts[i-1]);
 
+  // region overview
+  plots->fRegions = result->AddHist2D(
+    ("regions", "Events in region",
+    "Number of b-jets", "Number of additional jets",
+    3, 1.5, 4.5, 3, 1.5, 4.5);
 
   // book histograms for all regions
   // 0: inclusive (2+ addjet, 2+ bjet)
@@ -166,9 +174,8 @@ void BookHistograms(ExRootResult *result, MyPlots *plots) {
     plots->fResonanceM[i] = result->AddHist1D(
       ("resonance_m_" + std::to_string(i)).c_str(), "Reconstructed resonance mass",
       "m(tt) [GeV]", "Events",
-      20, 0.0, 2000.0);
+      40, 0.0, 4000.0);
     result->Attach(plots->fResonanceM[i], comment);
-
   }
 }
 
@@ -197,6 +204,25 @@ void AnalyseEvents(ExRootTreeReader *treeReader, MyPlots *plots) {
   Int_t i;
   TLorentzVector p4;
   float weight;
+  float sumOfWeights = 0;
+  float luminosity = 139.; // fb
+  // dummy cross section of 1 pb
+  float xsec = 1000.0; // fb
+  // ttv1
+  // float xsec = 0.45355093; // fb
+  // tjv1
+  // float xsec = 0.21494597; // fb
+  // tWv1
+  // float xsec = 0.25056313; // fb
+
+  // Get sum of weights
+  for (entry = 0; entry < allEntries; ++entry) {
+    treeReader->ReadEntry(entry);
+    weight = ((Weight*) branchWeight->At(0))->Weight;
+    sumOfWeights += weight;
+  }
+
+  std::cout << "Sum of weights " << sumOfWeights << " events" << std::endl;
 
   // Loop over all events
   for (entry = 0; entry < allEntries; ++entry) {
@@ -211,7 +237,8 @@ void AnalyseEvents(ExRootTreeReader *treeReader, MyPlots *plots) {
     int nBjets = 0;
     int nAddJets = 0;
 
-    weight = ((Weight*) branchWeight->At(0))->Weight;
+    weight = ((Weight*) branchWeight->At(0))->Weight * \
+             luminosity * xsec / sumOfWeights;
 
     // Lepton multiplicity
     for (i = 0; i < branchElectron->GetEntriesFast(); ++i) {
@@ -274,37 +301,54 @@ void AnalyseEvents(ExRootTreeReader *treeReader, MyPlots *plots) {
 
     // Event baseline selection: reject events
     //initial events
-    plots->fCutflow->Fill(-7, weight);
+    plots->fCutflow->Fill(-7);
+    plots->fCutflow_weighted->Fill(-7, weight);
     // signal lepton cut
     if (!(nSignalLeptons == 1)) continue;
-    plots->fCutflow->Fill(-6, weight);
+    plots->fCutflow->Fill(-6);
+    plots->fCutflow_weighted->Fill(-6, weight);
     // no additional leptons cut
     if (!(nBaselineLeptons == 1)) continue;
-    plots->fCutflow->Fill(-5, weight);
+    plots->fCutflow->Fill(-5);
+    plots->fCutflow_weighted->Fill(-5, weight);
     // central jets cut
     if (!(nJets >= 2)) continue;
-    plots->fCutflow->Fill(-4, weight);
+    plots->fCutflow->Fill(-4);
+    plots->fCutflow_weighted->Fill(-4, weight);
     // additional jets cut
     if (!(nAddJets >= 2)) continue;
-    plots->fCutflow->Fill(-3, weight);
+    plots->fCutflow->Fill(-3);
+    plots->fCutflow_weighted->Fill(-3, weight);
     // b-jets cut
     if (!(nBjets >= 2)) continue;
-    plots->fCutflow->Fill(-2, weight);
+    plots->fCutflow->Fill(-2);
+    plots->fCutflow_weighted->Fill(-2, weight);
     // reclustered jets cut
     if (!(nReclusteredJets >= 2)) continue;
-    plots->fCutflow->Fill(-1, weight);
+    plots->fCutflow->Fill(-1);
+    plots->fCutflow_weighted->Fill(-1, weight);
     // preselection
-    plots->fCutflow->Fill(0., weight);
+    plots->fCutflow->Fill(0.);
+    plots->fCutflow_weighted->Fill(0., weight);
     // individual regions
-    if (nAddJets == 2 && nBjets == 2) plots->fCutflow->Fill(1, weight);
-    if (nAddJets == 3 && nBjets == 2) plots->fCutflow->Fill(2, weight);
-    if (nAddJets >= 4 && nBjets == 2) plots->fCutflow->Fill(3, weight);
-    if (nAddJets == 2 && nBjets == 3) plots->fCutflow->Fill(4, weight);
-    if (nAddJets == 3 && nBjets == 3) plots->fCutflow->Fill(5, weight);
-    if (nAddJets >= 4 && nBjets == 3) plots->fCutflow->Fill(6, weight);
-    if (nAddJets == 2 && nBjets >= 4) plots->fCutflow->Fill(7, weight);
-    if (nAddJets == 3 && nBjets >= 4) plots->fCutflow->Fill(8, weight);
-    if (nAddJets >= 4 && nBjets >= 4) plots->fCutflow->Fill(9, weight);
+    if (nAddJets == 2 && nBjets == 2) plots->fCutflow->Fill(1);
+    if (nAddJets == 2 && nBjets == 2) plots->fCutflow_weighted->Fill(1, weight);
+    if (nAddJets == 3 && nBjets == 2) plots->fCutflow->Fill(2);
+    if (nAddJets == 3 && nBjets == 2) plots->fCutflow_weighted->Fill(2, weight);
+    if (nAddJets >= 4 && nBjets == 2) plots->fCutflow->Fill(3);
+    if (nAddJets >= 4 && nBjets == 2) plots->fCutflow_weighted->Fill(3, weight);
+    if (nAddJets == 2 && nBjets == 3) plots->fCutflow->Fill(4);
+    if (nAddJets == 2 && nBjets == 3) plots->fCutflow_weighted->Fill(4, weight);
+    if (nAddJets == 3 && nBjets == 3) plots->fCutflow->Fill(5);
+    if (nAddJets == 3 && nBjets == 3) plots->fCutflow_weighted->Fill(5, weight);
+    if (nAddJets >= 4 && nBjets == 3) plots->fCutflow->Fill(6);
+    if (nAddJets >= 4 && nBjets == 3) plots->fCutflow_weighted->Fill(6, weight);
+    if (nAddJets == 2 && nBjets >= 4) plots->fCutflow->Fill(7);
+    if (nAddJets == 2 && nBjets >= 4) plots->fCutflow_weighted->Fill(7, weight);
+    if (nAddJets == 3 && nBjets >= 4) plots->fCutflow->Fill(8);
+    if (nAddJets == 3 && nBjets >= 4) plots->fCutflow_weighted->Fill(8, weight);
+    if (nAddJets >= 4 && nBjets >= 4) plots->fCutflow->Fill(9);
+    if (nAddJets >= 4 && nBjets >= 4) plots->fCutflow_weighted->Fill(9, weight);
 
     // Increment event counter
     ++preselectionEntries;
@@ -312,6 +356,12 @@ void AnalyseEvents(ExRootTreeReader *treeReader, MyPlots *plots) {
     if (nAddJets >= 4 && nBjets >= 4) ++signalregion4a4bEntries;
 
     // Fill histograms
+    int nBjets_capped = nBjets;
+    if (nBjets_capped > 4) nBjets_capped = 4;
+    int nAddJets_capped = nAddJets;
+    if (nAddJets_capped > 4) nAddJets_capped = 4;
+    plots->fRegions->Fill(nBjets_capped, nAddJets_capped, weight);
+
     int region = getRegion(nAddJets, nBjets);
     plots->fNJets[0]->Fill(nJets, weight);
     plots->fNJets[region]->Fill(nJets, weight);
@@ -341,6 +391,7 @@ void AnalyseEvents(ExRootTreeReader *treeReader, MyPlots *plots) {
   std::cout << "** Preselection " << preselectionEntries << " events" << std::endl;
   std::cout << "** Control region " << controlregionEntries << " events" << std::endl;
   std::cout << "** Signal region " << signalregion4a4bEntries << " events" << std::endl;
+  std::cout << "Sum of weights " << sumOfWeights << " events" << std::endl;
 }
 
 //------------------------------------------------------------------------------

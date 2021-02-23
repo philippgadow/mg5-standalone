@@ -62,4 +62,3 @@ RUN cp -r /home/hep/Models/* /home/hep/${MG_VERSION}/models/
 WORKDIR /var/MG_outputs
 ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:/home/hep/${MG_VERSION}/HEPTools/lib/
 CMD /bin/bash
-
