@@ -23,6 +23,7 @@ ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$ROOTSYS/lib
 # install tools
 RUN echo "install lhapdf6" | /home/hep/${MG_VERSION}/bin/mg5_aMC
 RUN echo "install mg5amc_py8_interface" | /home/hep/${MG_VERSION}/bin/mg5_aMC
+RUN echo "install ExRootAnalysis" | /home/hep/${MG_VERSION}/bin/mg5_aMC
 
 # disable autoupdate
 RUN rm /home/hep/${MG_VERSION}/input/.autoupdate
