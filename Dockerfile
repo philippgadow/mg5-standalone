@@ -11,9 +11,9 @@ RUN pip3 install numpy scipy pandas matplotlib seaborn atlas-mpl-style
 
 WORKDIR /home/hep
 
-ENV MG_VERSION="MG5_aMC_v2_9_1_2"
+ENV MG_VERSION="MG5_aMC_v3_1_1"
 
-RUN wget --quiet -O- https://launchpad.net/mg5amcnlo/2.0/2.9.x/+download/MG5_aMC_v2.9.1.2.tar.gz | tar xzf -
+RUN wget --quiet -O- https://launchpad.net/mg5amcnlo/3.0/3.1.x/+download/MG5_aMC_v3.1.1.tar.gz | tar xzf -
 WORKDIR /home/hep/${MG_VERSION}
 
 ENV ROOTSYS /usr/local
@@ -52,7 +52,7 @@ RUN echo "set delphes_path /home/hep/${MG_VERSION}/HEPTools/delphes-3.4.3pre08/"
 
 # set up MadGraph
 RUN echo "set auto_convert_model True" | /home/hep/${MG_VERSION}/bin/mg5_aMC
-RUN ln /home/hep/MG5_aMC_v2_9_1_2/bin/mg5_aMC /usr/bin/mg5_aMC
+RUN ln /home/hep/${MG_VERSION}/bin/mg5_aMC /usr/bin/mg5_aMC
 
 # install models
 COPY . /home/hep/
