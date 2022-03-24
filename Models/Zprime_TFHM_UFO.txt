@@ -1,0 +1,5 @@
+Author: Ben Allanach
+Content: Third Family Hypercharge Model (Z' model explaining flavour anomalies)
+Source: Author private communication; can be retrieved from paper anc. material
+Paper: https://arxiv.org/abs/1904.10954
+Webpage: https://static-content.springer.com/esm/art%3A10.1007%2FJHEP08%282019%29106/MediaObjects/13130_2019_11110_MOESM1_ESM.tgz
