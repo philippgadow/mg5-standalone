@@ -1,19 +1,19 @@
-FROM rootproject/root:6.22.00-ubuntu20.04
+FROM rootproject/root:6.28.00-ubuntu22.04
 
 USER root
 
 RUN apt-get update
 RUN apt-get install -y --no-install-recommends \
-wget ca-certificates python python-dev gfortran build-essential \
+wget ca-certificates gfortran build-essential \
 ghostscript nano vim libboost-all-dev rsync gnuplot
 RUN wget --quiet -O- https://bootstrap.pypa.io/get-pip.py | python3 -
 RUN pip3 install numpy scipy pandas matplotlib seaborn atlas-mpl-style
 
 WORKDIR /home/hep
 
-ENV MG_VERSION="MG5_aMC_v3_1_1"
+ENV MG_VERSION="MG5_aMC_v3_5_0"
 
-RUN wget --quiet -O- https://launchpad.net/mg5amcnlo/3.0/3.1.x/+download/MG5_aMC_v3.1.1.tar.gz | tar xzf -
+RUN wget --quiet -O- https://launchpad.net/mg5amcnlo/3.0/3.5.x/+download/MG5_aMC_v3.5.0.tar.gz | tar xzf -
 WORKDIR /home/hep/${MG_VERSION}
 
 ENV ROOTSYS /usr/local
@@ -36,11 +36,10 @@ RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF30_lo
 RUN wget --quiet -O- http://lhapdfsets.web.cern.ch/lhapdfsets/current/NNPDF31_lo_as_0130.tar.gz | tar xzf -
 
 # install Delphes
-# (must install pre-release due to missing TF1 include in current version 4.2)
 WORKDIR /home/hep/${MG_VERSION}/HEPTools
-RUN wget --quiet -O- https://github.com/delphes/delphes/archive/3.4.3pre08.tar.gz | tar xzf - && cd delphes-3.4.3pre08 && make
-ENV LD_LIBRARY_PATH /home/hep/${MG_VERSION}/HEPTools/delphes-3.4.3pre08/:$LD_LIBRARY_PATH
-ENV ROOT_INCLUDE_PATH /home/hep/${MG_VERSION}/HEPTools/delphes-3.4.3pre08/external/:$ROOT_INCLUDE_PATH
+RUN wget --quiet -O- wget http://cp3.irmp.ucl.ac.be/downloads/Delphes-3.5.0.tar.gz | tar xzf - && cd Delphes-3.5.0 && make
+ENV LD_LIBRARY_PATH /home/hep/${MG_VERSION}/HEPTools/Delphes-3.5.0/:$LD_LIBRARY_PATH
+ENV ROOT_INCLUDE_PATH /home/hep/${MG_VERSION}/HEPTools/Delphes-3.5.0/external/:$ROOT_INCLUDE_PATH
 
 # install Fastjet
 RUN wget --quiet -O- http://fastjet.fr/repo/fastjet-3.3.4.tar.gz | tar xzf - && cd fastjet-3.3.4/ && ./configure --prefix=$PWD/build && make && make check && make install
@@ -48,7 +47,7 @@ ENV LD_LIBRARY_PATH /home/hep/${MG_VERSION}/HEPTools/fastjet-3.3.4/build/lib/:$L
 
 # set up config executables
 RUN echo "set lhapdf /home/hep/${MG_VERSION}/HEPTools/lhapdf6_py3/bin/lhapdf-config" | /home/hep/${MG_VERSION}/bin/mg5_aMC
-RUN echo "set delphes_path /home/hep/${MG_VERSION}/HEPTools/delphes-3.4.3pre08/" | /home/hep/${MG_VERSION}/bin/mg5_aMC
+RUN echo "set delphes_path /home/hep/${MG_VERSION}/HEPTools/Delphes-3.5.0/" | /home/hep/${MG_VERSION}/bin/mg5_aMC
 
 # set up MadGraph
 RUN echo "set auto_convert_model True" | /home/hep/${MG_VERSION}/bin/mg5_aMC

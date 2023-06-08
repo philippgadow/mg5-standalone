@@ -39,5 +39,5 @@ mkdir ~/mg5_output
 cd ~/mg5_output
 
 # launch mg5 with default event generation for top-philic resonances model
-/home/hep/MG5_aMC_v2_7_3/bin/mg5_aMC /home/hep/commands/generate_bsm4top_atlasufo_ttv1_mv1-1500_wv1-auto.cmnd
+/home/hep/MG5_aMC_v3_5_0/bin/mg5_aMC /home/hep/commands/atlas_ufo/generate_bsm4top_atlasufo_ttv1_mv1-1500_wv1-auto.cmnd
 ```
